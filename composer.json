@@ -4,6 +4,8 @@
   "keywords": ["PNWPHP", "conference", "php-world", "bot", "api.ai", "web hook"],
   "homepage": "https://github.com/iansltx/build-a-bot",
   "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Ian Littman",
@@ -14,7 +16,8 @@
   ],
   "require": {
     "php": "^7.1",
-    "slim/slim": "^3.8.1"
+    "slim/slim": "^3.8.1",
+    "iansltx/api-ai-bridge": "^0.1"
   },
   "autoload": {
     "psr-4": {"BuildABot\\App\\": "src/"}

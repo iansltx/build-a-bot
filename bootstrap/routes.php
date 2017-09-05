@@ -8,4 +8,6 @@ return function() { /** @var \Slim\App $this */
             str_replace('{{ API_AI_KEY }}', getenv('API_AI_KEY'), file_get_contents(__DIR__ . '/../templates/bot.html')
         ));
     });
+
+    $this->post('hook', \iansltx\ApiAiBridge\Middleware\DoublePass::class);
 };

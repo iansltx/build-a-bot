@@ -15,7 +15,9 @@ Usage
 -----
 
 Run using one of the below methods, then visit `http://localhost:9000/bot` to view
-the bot page.
+the bot page. Use a tool like [ngrok](https://ngrok.com) to make your application
+available to the outside world, then set `https://your-hostname-here.ngrok.io/hook`
+as the destination of your api.ai agent web hook.
 
 ### Run with Docker
 
