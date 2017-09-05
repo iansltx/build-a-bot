@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline" onsubmit="window.requestText(); event.preventDefault();">
-                <input id="requestText" type="text" class="form-control col-sm-8" placeholder="What is your command?" />
+                <input id="requestText" type="text" autocomplete="off" class="form-control col-sm-8" placeholder="What is your command?" />
                 <button class="btn btn-primary">Request</button>
             </form>
             <p><strong>Response: </strong><span id="responseText"></span></p>
