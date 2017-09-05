@@ -15,9 +15,9 @@
     <h1>Build a Bot</h1>
     <div class="row">
         <div class="col-md-6">
-            <form class="form-inline" onsubmit="window.requestText(); event.preventDefault();">
+            <form class="form-inline" onsubmit="window.requestText(document.getElementById('requestText').value); event.preventDefault();">
                 <input id="requestText" type="text" autocomplete="off" class="form-control col-sm-8" placeholder="What is your command?" />
-                <button class="btn btn-primary">Request</button>
+                <button id="submitRequest" class="btn btn-primary">Request</button>
             </form>
             <p><strong>Response: </strong><span id="responseText"></span></p>
         </div>
@@ -29,11 +29,30 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <script src="https://cdn.rawgit.com/api-ai/apiai-javascript-client/2.0.0-beta.21/target/ApiAi.min.js"></script>
 <script>
-    var apiAi = new ApiAi.ApiAiClient({accessToken: '{{ API_AI_KEY }}'});
+    var apiAi = new ApiAi.ApiAiClient({accessToken: '{{ API_AI_KEY }}'}), isRequesting = false;
 
-    function requestText() {
-        document.getElementById('responseText').innerText = '// TODO send request with ' +
-                document.getElementById('requestText').value;
+    function requestText(text) {
+        if (isRequesting) {
+            return;
+        }
+        isRequesting = true;
+        document.getElementById('submitRequest').disabled = true;
+
+        apiAi.textRequest(text).then(function(response) {
+            console.log(response);
+            for (var i = 0; i < response.result.fulfillment.messages.length; i++) {
+                if (response.result.fulfillment.messages[i].type === 0) { // text response type
+                    document.getElementById('responseText').innerText = response.result.fulfillment.messages[i].speech;
+                    return;
+                }
+            }
+        }).catch(function(error) {
+            document.getElementById('responseText').innerText = 'Request failed. See console.';
+            console.log(error);
+        }).then(function() {
+            document.getElementById('submitRequest').disabled = false;
+            isRequesting = false;
+        });
     }
 </script>
 </html>
