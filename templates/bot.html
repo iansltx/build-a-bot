@@ -19,7 +19,13 @@
                 <input id="requestText" type="text" autocomplete="off" class="form-control col-sm-8" placeholder="What is your command?" />
                 <button id="submitRequest" class="btn btn-primary">Request</button>
             </form>
-            <p><strong>Response: </strong><span id="responseText"></span></p>
+            <div class="form-check" id="speechCheckbox">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="speakResult" disabled>
+                    Speech synthesis is not supported in your browser
+                </label>
+            </div>
+            <p><strong>Text Response: </strong><span id="responseText"></span></p>
         </div>
     </div>
 </div><!-- /.container -->
@@ -31,6 +37,11 @@
 <script>
     var apiAi = new ApiAi.ApiAiClient({accessToken: '{{ API_AI_KEY }}'}), isRequesting = false;
 
+    if ('speechSynthesis' in window) { // only show "Speak result" checkbox if browser can speak
+        document.getElementById('speechCheckbox').innerHTML = '<label class="form-check-label">' +
+            '<input class="form-check-input" type="checkbox" id="speakResult">Speak result</label>';
+    } // see https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API for browser support info
+
     function requestText(text) {
         if (isRequesting) {
             return;
@@ -40,6 +51,11 @@
 
         apiAi.textRequest(text).then(function(response) {
             console.log(response);
+
+            if ('speechSynthesis' in window && document.getElementById('speakResult').checked) {
+                window.speechSynthesis.speak(new SpeechSynthesisUtterance(response.result.fulfillment.speech));
+            }
+
             for (var i = 0; i < response.result.fulfillment.messages.length; i++) {
                 if (response.result.fulfillment.messages[i].type === 0) { // text response type
                     document.getElementById('responseText').innerText = response.result.fulfillment.messages[i].speech;
