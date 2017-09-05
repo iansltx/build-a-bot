@@ -1,0 +1,22 @@
+{
+  "name": "iansltx/build-a-bot",
+  "description": "Build a Bot workshop companion code",
+  "keywords": ["PNWPHP", "conference", "php-world", "bot", "api.ai", "web hook"],
+  "homepage": "https://github.com/iansltx/build-a-bot",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ian Littman",
+      "email": "iansltx@gmail.com",
+      "homepage": "https://twitter.com/iansltx",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "slim/slim": "^3.8.1"
+  },
+  "autoload": {
+    "psr-4": {"BuildABot\\App\\": "src/"}
+  }
+}
