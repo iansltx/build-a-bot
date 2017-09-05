@@ -15,6 +15,9 @@
     <h1>Build a Bot</h1>
     <div class="row">
         <div class="col-md-6">
+            <div id="speechRecognition" style="padding-bottom: 0.2em">
+                Speech recognition is not supported in your browser
+            </div>
             <form class="form-inline" onsubmit="window.requestText(document.getElementById('requestText').value); event.preventDefault();">
                 <input id="requestText" type="text" autocomplete="off" class="form-control col-sm-8" placeholder="What is your command?" />
                 <button id="submitRequest" class="btn btn-primary">Request</button>
@@ -34,6 +37,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <script src="https://cdn.rawgit.com/api-ai/apiai-javascript-client/2.0.0-beta.21/target/ApiAi.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
 <script>
     var apiAi = new ApiAi.ApiAiClient({accessToken: '{{ API_AI_KEY }}'}), isRequesting = false;
 
@@ -41,6 +45,31 @@
         document.getElementById('speechCheckbox').innerHTML = '<label class="form-check-label">' +
             '<input class="form-check-input" type="checkbox" id="speakResult">Speak result</label>';
     } // see https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API for browser support info
+
+    if (annyang) { // Speech recognition is available!
+        annyang.addCommands({'*text': function(text) {
+            // Once we recognize a phrase, we stop listening. We could keep listening/processing requests
+            // instead, even controlling whether we're listening via voice commands, if we want.
+            document.getElementById('listenButton').disabled = false;
+            document.getElementById('listenButton').innerText = 'Listen';
+            document.getElementById('requestText').value = text;
+            requestText(text);
+            annyang.abort();
+        }}); // map all incoming speech recognition to our text request function
+
+        function listenForSpeech() {
+            if (annyang.isListening()) {
+                return;
+            }
+
+            document.getElementById('listenButton').disabled = true;
+            document.getElementById('listenButton').innerText = 'Listening...';
+            annyang.start();
+        }
+
+        document.getElementById('speechRecognition').innerHTML = // set up listen button
+            '<button class="btn btn-success" id="listenButton" onclick="listenForSpeech()">Listen</button>';
+    }
 
     function requestText(text) {
         if (isRequesting) {
