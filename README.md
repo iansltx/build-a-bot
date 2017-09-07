@@ -12,7 +12,8 @@ To pick up at an earlier stage of the project, use one of these branches:
 
 If you haven't already, please [review the requirements](https://gist.github.com/iansltx/a93354ba27d9066021c557e41e436b44)
 for this workshop, and [join the PNWPHP 2017 Slack](https://join.slack.com/t/pnwphp2017/shared_invite/MjM0NTcxNDU5NTg3LTE1MDQyMDMxMzQtZTI0NGU5YTU3Ng)
-to get help when you need it.
+to get help when you need it. If you want to use the same agent I set up during the workshop,
+plus a fix for the context step I showed, create an agent, then restore from api-ai-agent.zip here.
 
 Happy hacking!
 
