@@ -8,7 +8,7 @@ To pick up at an earlier stage of the project, use one of these branches:
 2. [implement-text-requests](https://github.com/iansltx/build-a-bot/tree/implement-text-requests)
 3. [add-speech-synthesis](https://github.com/iansltx/build-a-bot/tree/add-speech-synthesis)
 4. [add-voice-recognition](https://github.com/iansltx/build-a-bot/tree/add-voice-recognition)
-5. [add-web-hook](https://github.com/iansltx/build-a-bot/tree/add-web-hook)
+5. [add-web-hook-pnwphp-2017](https://github.com/iansltx/build-a-bot/tree/add-web-hook-pnwphp-2017)
 
 If you haven't already, please [review the requirements](https://gist.github.com/iansltx/a93354ba27d9066021c557e41e436b44)
 for this workshop, and [join the PNWPHP 2017 Slack](https://join.slack.com/t/pnwphp2017/shared_invite/MjM0NTcxNDU5NTg3LTE1MDQyMDMxMzQtZTI0NGU5YTU3Ng)
